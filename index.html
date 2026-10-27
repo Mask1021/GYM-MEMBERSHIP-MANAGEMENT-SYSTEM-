@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IRONFLOW — Your gym. In control.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="cursor" aria-hidden="true"></div>
+<header class="nav" id="nav">
+  <a class="logo" href="#/" aria-label="IRONFLOW home"><svg viewBox="0 0 24 24" width="26" height="26"><path class="mark" d="M3 12h18M6 7v10M18 7v10M9 9v6M15 9v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>IRONFLOW</a>
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+  <nav id="links" aria-label="Primary">
+    <a href="#/dashboard" data-route="dashboard">Dashboard</a>
+    <a href="#/members" data-route="members">Members</a><a href="#/plans" data-route="plans">Plans</a><a href="#/trainers" data-route="trainers">Trainers</a>
+    <a href="#/payments" data-route="payments">Payments</a><a href="#/renewals" data-route="renewals">Renewals</a><a href="#/analytics" data-route="analytics">Analytics</a><a href="#/settings" data-route="settings">Settings</a>
+    <span class="bar" id="bar"></span>
+  </nav>
+  <div class="nav-actions">
+    <button class="icon-btn" id="searchBtn" aria-label="Search (Ctrl+K)" hidden><i data-lucide="search"></i></button>
+    <div class="bellwrap" id="quickWrap" hidden><button class="icon-btn" id="quickBtn" aria-label="Quick actions" aria-haspopup="menu" aria-expanded="false"><i data-lucide="plus"></i></button><div class="menu" id="quickMenu" role="menu" hidden></div></div>
+    <div class="bellwrap" id="bellWrap" hidden><button class="icon-btn" id="bellBtn" aria-label="Notifications" aria-expanded="false"><i data-lucide="bell"></i><span class="dot" id="bellDot" hidden></span></button><div class="menu" id="bellMenu" hidden></div></div>
+    <button class="icon-btn" id="themeBtn" aria-label="Theme and accent"><i data-lucide="palette"></i></button>
+    <div class="bellwrap" id="profWrap" hidden><button class="icon-btn av-btn" id="profBtn" aria-label="Profile menu" aria-haspopup="menu" aria-expanded="false"></button><div class="menu" id="profMenu" role="menu" hidden></div></div>
+    <button class="btn ghost" id="authBtn">Log in</button>
+  </div>
+</header>
+
+<main id="main">
+<section id="landing" class="view">
+  <div class="hero">
+    <div class="orbits" aria-hidden="true">
+      <svg viewBox="0 0 600 600"><g fill="none" stroke="var(--accent)" stroke-width="1.5"><circle class="o" cx="300" cy="300" r="120"/><circle class="o" cx="300" cy="300" r="190" opacity=".5"/><circle class="o" cx="300" cy="300" r="260" opacity=".25"/></g>
+      <g class="bell" stroke="var(--text)" stroke-width="10" stroke-linecap="round"><path d="M130 300h340M180 230v140M420 230v140" /><path d="M225 255v90M375 255v90" stroke="var(--accent)"/></g></svg>
+    </div>
+    <p class="eyebrow">Gym management, reimagined</p>
+    <h1 class="display" aria-label="Your gym. In control."><span class="ln"><span>YOUR GYM.</span></span><span class="ln"><span>IN <em>control.</em></span></span></h1>
+    <p class="lead">Members, renewals, trainers and payments in one precise system. Record what happened, see what's next.</p>
+    <div class="cta"><button class="btn primary" data-magnetic id="enterBtn">ENTER DASHBOARD</button><a class="btn ghost" data-magnetic href="#features">EXPLORE FEATURES</a></div>
+    <div class="preview" id="preview"><span class="tag">Sample preview · not your data</span>
+      <div><b data-count="248">248</b><small>Members</small></div><div><b data-count="86">86</b><small>Retention %</small></div><div><b data-count="12">12</b><small>Renewals due</small></div></div>
+    <a class="scroll" href="#features" aria-label="Scroll to features"><i data-lucide="arrow-down"></i></a>
+  </div>
+  <div id="features" class="features">
+    <h2 class="rv">Built for the front desk.</h2>
+    <article class="rv"><i data-lucide="users"></i><h3>Members</h3><p>Search, filter and track every membership with days remaining at a glance.</p></article>
+    <article class="rv"><i data-lucide="refresh-cw"></i><h3>Renewals</h3><p>Early renewals extend, never overlap. Double-clicks can't create duplicates.</p></article>
+    <article class="rv"><i data-lucide="indian-rupee"></i><h3>Payments</h3><p>Manual records with an audit trail. Revenue is net of refunds.</p></article>
+    <article class="rv"><i data-lucide="dumbbell"></i><h3>Trainers</h3><p>Workloads and assignments, with safe reassignment.</p></article>
+  </div>
+</section>
+
+<section id="dashboard" class="view" hidden>
+  <div class="dash-top"><div><p class="eyebrow" id="today"></p><h1 class="h1" id="greet">Welcome</h1><span class="demo-badge" id="demoBadge" hidden>Includes demo data</span></div><button class="btn primary" data-act="add">Add member</button></div>
+  <div id="err" class="state" hidden></div>
+  <div class="kpis" id="kpis"></div>
+  <div class="grid">
+    <div class="panel wide"><h3>Membership growth</h3><canvas id="cGrowth" height="140"></canvas></div>
+    <div class="panel"><h3>Revenue by plan</h3><canvas id="cPlan" height="200"></canvas></div>
+    <div class="panel wide"><h3>Monthly revenue</h3><canvas id="cRev" height="140"></canvas></div>
+    <div class="panel"><h3>Upcoming renewals</h3><ul class="list" id="dashRenewals"></ul></div>
+    <div class="panel"><h3>Trainer workload</h3><ul class="list" id="dashTrainers"></ul></div>
+    <div class="panel"><h3>Recent payments</h3><ul class="list" id="recentPay"></ul></div>
+    <div class="panel"><h3>Recently added</h3><ul class="list" id="recentMem"></ul></div>
+    <div class="panel"><h3>Outstanding dues</h3><ul class="list" id="dueList"></ul></div>
+    <div class="panel"><h3>Quick actions</h3><div class="qa"><button class="btn ghost" data-act="add">Add member</button><button class="btn ghost" data-act="expiring">Expiring members</button><button class="btn ghost" data-act="members">All members</button><a class="btn ghost" href="/api/transfer/payments.csv?range=this_month" download>Export payments</a></div></div>
+  </div>
+</section>
+<section id="members" class="view" hidden>
+  <div class="dash-top"><div><p class="eyebrow">Directory</p><h1 class="h1">Members</h1></div><button class="btn primary" data-act="add">Add member</button></div>
+  <div class="toolbar"><input type="search" id="mQ" placeholder="Search name, ID, phone or email" aria-label="Search members">
+    <div class="chips" id="mChips" role="group" aria-label="Status filter"></div>
+    <select id="mSort" aria-label="Sort"><option value="joinDate">Newest</option><option value="fullName">Name A–Z</option><option value="expiry">Expiry soonest</option></select>
+    <a class="btn ghost" href="/api/transfer/members.csv" download>Export CSV</a>
+    <label class="btn ghost">Import CSV<input type="file" id="mImport" accept=".csv,text/csv" hidden></label></div>
+  <div class="tbl-wrap"><table><thead><tr><th>Member</th><th>ID</th><th>Plan</th><th>Expiry</th><th>Trainer</th><th>Status</th></tr></thead><tbody id="mBody"></tbody></table></div>
+  <div class="pager" id="mPager"></div>
+</section>
+<section id="plans" class="view" hidden><div class="dash-top"><div><p class="eyebrow">Pricing</p><h1 class="h1">Plans</h1></div><button class="btn primary" id="addPlan">New plan</button></div>
+  <div class="cards" id="planGrid"></div><h3 class="sec">Compare plans</h3><div class="tbl-wrap"><table id="planCmp"></table></div></section>
+<section id="trainers" class="view" hidden><div class="dash-top"><div><p class="eyebrow">Team</p><h1 class="h1">Trainers</h1></div><button class="btn primary" id="addTrainer">Add trainer</button></div>
+  <div class="toolbar"><select id="tSpec" aria-label="Specialization"></select><select id="tStat" aria-label="Status"><option value="">All statuses</option><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+  <div class="cards" id="trainerGrid"></div></section>
+<section id="payments" class="view" hidden><div class="dash-top"><div><p class="eyebrow">Ledger</p><h1 class="h1">Payments</h1><p class="d" id="paySum"></p></div><button class="btn primary" id="addPay">Record payment</button></div>
+  <div class="toolbar"><input type="search" id="pQ" placeholder="Search receipt, member or ID" aria-label="Search payments"><input type="month" id="pMonth" aria-label="Month">
+    <select id="pStatus" aria-label="Status"><option value="">All statuses</option><option value="PAID">Paid</option><option value="PENDING">Pending</option><option value="FAILED">Failed</option><option value="REFUNDED">Refunded</option></select>
+    <select id="pMethod" aria-label="Method"><option value="">All methods</option><option value="CASH">Cash</option><option value="UPI">UPI</option><option value="CARD">Card</option><option value="BANK_TRANSFER">Bank transfer</option><option value="OTHER">Other</option></select>
+    <a class="btn ghost" href="/api/transfer/payments.csv" download>Export CSV</a></div>
+  <div class="tbl-wrap"><table><thead><tr><th>Receipt</th><th>Member</th><th>Date</th><th>Amount</th><th>Method</th><th>Status</th><th></th></tr></thead><tbody id="pBody"></tbody></table></div><div class="pager" id="pPager"></div></section>
+<section id="renewals" class="view" hidden><div class="dash-top"><div><p class="eyebrow">Memberships</p><h1 class="h1">Renewals</h1><p class="d">Renewing early never loses days: the new period starts the day after the current plan ends.</p></div></div>
+  <div class="toolbar"><div class="chips" id="rnChips" role="group" aria-label="Renewal category"></div></div>
+  <div class="panel tl"><h3>Timeline</h3><div id="rnTimeline"></div></div>
+  <div class="tbl-wrap"><table><thead><tr><th>Member</th><th>Plan</th><th>Expiry</th><th>When</th><th>Status</th><th></th></tr></thead><tbody id="rnBody"></tbody></table></div></section>
+<section id="analytics" class="view" hidden><div class="dash-top"><div><p class="eyebrow">Reports</p><h1 class="h1">Analytics</h1></div><div class="row"><button class="btn ghost" id="anCsv">Export CSV</button><button class="btn ghost" id="anPrint">Print report</button></div></div>
+  <div class="toolbar"><div class="chips" id="anChips" role="group" aria-label="Date range"></div><span id="anCustom" hidden><input type="date" id="anFrom" aria-label="From"> – <input type="date" id="anTo" aria-label="To"> <button class="btn ghost sm" id="anApply">Apply</button></span></div>
+  <div id="anErr" class="state" hidden></div><div class="kpis" id="anKpis"></div>
+  <div class="grid"><div class="panel"><h3>New members per month</h3><canvas id="cMemNew" height="170"></canvas></div><div class="panel"><h3>Total vs active members</h3><canvas id="cMemTot" height="170"></canvas></div>
+    <div class="panel"><h3>Net revenue by month</h3><canvas id="cAnRev" height="170"></canvas></div><div class="panel"><h3>Outstanding dues by month</h3><canvas id="cAnDues" height="170"></canvas></div>
+    <div class="panel"><h3>Revenue by plan</h3><canvas id="cAnPlan" height="220"></canvas></div><div class="panel"><h3>Active vs expired</h3><canvas id="cAvE" height="220"></canvas></div>
+    <div class="panel"><h3>Retention trend</h3><canvas id="cRet" height="170"></canvas></div><div class="panel"><h3>Trainer workload</h3><canvas id="cTr" height="170"></canvas></div></div></section>
+<section id="settings" class="view" hidden><div class="dash-top"><div><p class="eyebrow">Account</p><h1 class="h1">Settings</h1></div></div>
+  <div class="grid"><div class="panel"><h3>Profile</h3><dl class="kv" id="setProfile"></dl></div>
+    <div class="panel"><h3>Appearance</h3><p class="d">Mode and accent colour are saved on this device and to your account.</p><br><button class="btn ghost" id="setTheme">Open theme panel</button></div>
+    <div class="panel"><h3>Notifications</h3><label class="chk"><input type="checkbox" id="npExp"> Memberships expiring within 7 days</label><label class="chk"><input type="checkbox" id="npDue"> Payments pending for over 7 days</label><p class="d">In-app only. No email or SMS is sent because no provider is connected.</p></div>
+    <div class="panel"><h3>Change password</h3><form id="pwForm" novalidate><label>Current password<input type="password" name="current" autocomplete="current-password"><span class="fe" data-err="current"></span></label><label>New password (10+ characters)<input type="password" name="new" autocomplete="new-password"><span class="fe" data-err="new"></span></label><p class="form-err" role="alert"></p><button class="btn primary">Update password</button></form></div>
+    <div class="panel wide" id="staffPanel" hidden><h3>Staff accounts</h3><button class="btn ghost sm" id="addUser">Add staff account</button><ul class="list" id="userList"></ul><p class="d">Removed accounts keep any open session until it expires (up to 8 hours).</p></div></div></section>
+<section id="audit" class="view" hidden><div class="dash-top"><div><p class="eyebrow">Admin</p><h1 class="h1">Audit log</h1><p class="d">Renewals, payment changes, refunds, reassignments and account changes are recorded here.</p></div></div>
+  <div class="toolbar"><select id="auEntity" aria-label="Record type"><option value="">All records</option><option>Payment</option><option>Member</option><option>Trainer</option><option>Subscription</option><option>User</option></select></div>
+  <div class="tbl-wrap"><table><thead><tr><th>When (IST)</th><th>Who</th><th>Action</th><th>Record</th><th>Details</th></tr></thead><tbody id="auBody"></tbody></table></div><div class="pager" id="auPager"></div></section>
+</main>
+
+<dialog id="loginDlg"><form id="loginForm" method="dialog" novalidate><h2>Sign in</h2>
+  <label>Email<input name="email" type="email" autocomplete="username" required></label>
+  <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+  <p class="form-err" id="loginErr" role="alert"></p>
+  <div class="row"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn primary" id="loginSubmit">Sign in</button></div></form></dialog>
+
+<dialog id="themeDlg" class="side"><h2>Appearance</h2>
+  <div class="seg" id="modeSeg" role="radiogroup" aria-label="Mode"></div>
+  <h3>Accent</h3><div class="swatches" id="swatches"></div>
+  <label class="custom">Custom colour <input type="color" id="customColor" value="#C7FF4A"></label>
+  <button class="btn ghost" data-close>Done</button></dialog>
+<dialog id="memberDlg" class="side"><form id="mForm" novalidate><h2 id="mFormTitle">Add member</h2>
+  <label>Full name<input name="fullName" autocomplete="off"><span class="fe" data-err="fullName"></span></label>
+  <label>Email<input name="email" type="email"><span class="fe" data-err="email"></span></label>
+  <label>Phone<input name="phone" type="tel"><span class="fe" data-err="phone"></span></label>
+  <label>Date of birth<input name="dob" type="date"></label>
+  <label>Gender<select name="gender"><option value="">Prefer not to say</option><option>Female</option><option>Male</option><option>Other</option></select></label>
+  <label>Trainer<select name="trainerId"></select></label>
+  <label>Emergency contact<input name="emergencyContact"></label>
+  <label>Notes<textarea name="notes" rows="3"></textarea></label>
+  <label class="chk"><input type="checkbox" name="isActive" checked> Active member</label>
+  <p class="form-err" id="mFormErr" role="alert"></p>
+  <div class="row"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn primary" id="mSave">Save</button></div></form></dialog>
+<dialog id="detailDlg" class="side"><div id="detailBody"></div><button class="btn ghost" data-close>Close</button></dialog>
+<dialog id="confirmDlg"><form method="dialog"><p id="confirmMsg"></p><div class="row"><button value="cancel" class="btn ghost">Cancel</button><button value="ok" class="btn primary">Confirm</button></div></form></dialog>
+<dialog id="planDlg" class="side"><form id="plForm" novalidate><h2 id="plTitle">New plan</h2>
+  <label>Name<input name="name"><span class="fe" data-err="name"></span></label>
+  <label>Duration (days)<input name="durationDays" type="number" min="1"><span class="fe" data-err="durationDays"></span></label>
+  <label>Price (₹)<input name="price" type="number" min="0" step="1"><span class="fe" data-err="price"></span></label>
+  <label>Description<textarea name="description" rows="2"></textarea></label>
+  <label>Benefits (one per line)<textarea name="benefits" rows="4"></textarea></label>
+  <label class="chk"><input type="checkbox" name="isActive" checked> Active</label><p class="form-err" role="alert"></p>
+  <div class="row"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn primary">Save</button></div></form></dialog>
+<dialog id="trDlg" class="side"><form id="trForm" novalidate><h2 id="trTitle">Add trainer</h2>
+  <label>Full name<input name="fullName"><span class="fe" data-err="fullName"></span></label>
+  <label>Email<input name="email" type="email"><span class="fe" data-err="email"></span></label>
+  <label>Phone<input name="phone" type="tel"></label>
+  <label>Specialization<input name="specialization"><span class="fe" data-err="specialization"></span></label>
+  <label>Experience (years)<input name="experienceYears" type="number" min="0"></label>
+  <label>Certifications<input name="certifications"></label><label>Notes<textarea name="notes" rows="2"></textarea></label>
+  <label class="chk"><input type="checkbox" name="isActive" checked> Active</label><p class="form-err" role="alert"></p>
+  <div class="row"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn primary">Save</button></div></form></dialog>
+<dialog id="payDlg" class="side"><form id="pForm" novalidate><h2>Record payment</h2>
+  <label>Member<input id="pMemQ" placeholder="Type to search members…" autocomplete="off"><select name="memberId" id="pMem"></select><span class="fe" data-err="memberId"></span></label>
+  <label>Amount (₹)<input name="amount" type="number" min="1" step="0.01"><span class="fe" data-err="amount"></span></label>
+  <label>Payment date<input name="paidOn" type="date"><span class="fe" data-err="paidOn"></span></label>
+  <label>Method<select name="method"><option value="CASH">Cash</option><option value="UPI">UPI</option><option value="CARD">Card</option><option value="BANK_TRANSFER">Bank transfer</option><option value="OTHER">Other</option></select></label>
+  <label>Status<select name="status"><option value="PAID">Paid</option><option value="PENDING">Pending (due)</option><option value="FAILED">Failed</option></select></label>
+  <label>Description<input name="description"></label>
+  <p class="d">Manual record only — nothing is processed. Never enter card numbers or PINs.</p><p class="form-err" role="alert"></p>
+  <div class="row"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn primary">Record</button></div></form></dialog>
+<div id="receipt" aria-hidden="true"></div>
+<dialog id="searchDlg" class="cmd"><div class="cmd-in"><i data-lucide="search"></i><input id="sQ" role="combobox" aria-expanded="true" aria-controls="sList" aria-autocomplete="list" aria-label="Search" placeholder="Search members, trainers, plans, payments…" autocomplete="off"><button class="icon-btn" id="sClear" aria-label="Clear search" hidden>✕</button></div><ul id="sList" role="listbox" aria-label="Results"></ul><p class="d" style="padding:8px 16px">↑ ↓ to move · Enter to open · Esc to close</p></dialog>
+<dialog id="refundDlg"><form id="rfForm" novalidate><h2>Refund payment</h2><p class="d" id="rfInfo"></p><br><label>Amount to refund (₹)<input name="amount" type="number" step="0.01" min="0.01"><span class="fe" data-err="amount"></span></label><p class="form-err" role="alert"></p><div class="row"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn primary">Record refund</button></div></form></dialog>
+<dialog id="userDlg" class="side"><form id="usForm" novalidate><h2 id="usTitle">Add staff account</h2>
+  <label>Full name<input name="name" autocomplete="off"><span class="fe" data-err="name"></span></label>
+  <label>Email<input name="email" type="email" autocomplete="off"><span class="fe" data-err="email"></span></label>
+  <label>Role<select name="role"><option value="STAFF">Staff: day-to-day work</option><option value="ADMIN">Admin: full access</option></select></label>
+  <label id="usPw">Password (10+ characters)<input name="password" type="password" autocomplete="new-password"><span class="fe" data-err="password"></span></label>
+  <p class="form-err" role="alert"></p><div class="row"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn primary">Save</button></div></form></dialog>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.452.0/dist/umd/lucide.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/members.js"></script>
+<script src="js/modules.js"></script>
+<script src="js/reports.js"></script>
+<script src="js/shell.js"></script>
+<script src="js/admin.js"></script>
+</body></html>
